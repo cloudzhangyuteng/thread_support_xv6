@@ -1,1 +1,0 @@
-# thread_support_xv6
