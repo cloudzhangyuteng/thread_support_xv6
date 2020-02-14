@@ -546,9 +546,10 @@ int clone(void *stack, int size)
 	np->sz = proc->sz;
     np->parent = proc;
     *np->tf = *proc->tf;
+    np->pgdir = proc->pgdir;
     
-    np->tf->esp = (uint)(stack + size -4); //put esp to right spot on stack
-    *((uint*)(np->tf->esp)) = 0xFFFFFFFF;
+    np->tf->esp = (uint)(stack + size -12); //put esp to right spot on stack
+    
 	
 	// Clear %eax so that fork returns 0 in the child.
     np->tf->eax = 0;
@@ -571,3 +572,4 @@ int clone(void *stack, int size)
 	
 	return pid;
 }
+

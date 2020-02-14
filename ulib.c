@@ -104,3 +104,14 @@ memmove(void *vdst, const void *vsrc, int n)
     *dst++ = *src++;
   return vdst;
 }
+
+void thread_create(void *(*start_routine)(void*), void *arg)
+{
+	void* stack = malloc(1024);
+	uint* p = (uint*)((uint)(stack)+1024-12);
+	p[0] = (uint)start_routine;
+	p[1] = (uint)arg;
+	p[2] = (uint)exit;
+	
+	clone(stack, 1024);
+}
