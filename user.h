@@ -24,6 +24,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int clone(void*, int);
+int join(void*)
 
 // ulib.c
 int stat(const char*, struct stat*);
@@ -40,3 +41,4 @@ void free(void*);
 int atoi(const char*);
 
 void thread_create(void *(*start_routine)(void*), void *arg);
+void thread_join();

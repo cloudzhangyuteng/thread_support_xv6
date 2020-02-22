@@ -103,3 +103,13 @@ int sys_clone(void)
 	
 	return clone(stack, size);
 }
+
+int sys_join(void)
+{
+	void** stack;
+	
+	if(argptr(0, (void*)&stack, sizeof(void**)) < 0)
+		return -1;
+		
+	return join(stack);
+}
