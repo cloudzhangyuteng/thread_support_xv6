@@ -1,5 +1,6 @@
 struct stat;
 struct rtcdate;
+struct semaphore;
 
 // system calls
 int fork(void);
@@ -25,6 +26,10 @@ int sleep(int);
 int uptime(void);
 int clone(void*, int);
 int join(void*);
+int sem_init(struct semaphore*, int);
+int sem_wait(struct semaphore*);
+int sem_signal(struct semaphore*);
+int sem_destroy(struct semaphore*);
 
 // ulib.c
 int stat(const char*, struct stat*);

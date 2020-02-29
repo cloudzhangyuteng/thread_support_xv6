@@ -113,3 +113,49 @@ int sys_join(void)
 		
 	return join(stack);
 }
+
+int sys_sem_init(void)
+{
+	struct semaphore* sem;
+	int value;
+	
+	if(argptr(0, (void*)&sem, sizeof(sem)) < 0)
+		return -1;
+	
+	if(argint(1, &value) < 0)
+		return -1;
+		
+	return sem_init(sem, value);
+}
+
+int sys_sem_wait(void)
+{
+	struct semaphore* sem;
+	
+	if(argptr(0, (void*)&sem, sizeof(sem)) < 0)
+		return -1;
+	
+	return sem_wait(sem);
+}
+
+int sys_sem_signal(void)
+{
+	struct semaphore* sem;
+	
+	if(argptr(0, (void*)&sem, sizeof(sem)) < 0)
+		return -1;
+	
+	return sem_signal(sem);
+}
+
+int sys_sem_destroy(void)
+{
+	struct semaphore* sem;
+	
+	if(argptr(0, (void*)&sem, sizeof(sem)) < 0)
+		return -1;
+	
+	return sem_destroy(sem);
+}
+
+

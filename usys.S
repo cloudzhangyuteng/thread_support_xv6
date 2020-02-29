@@ -32,3 +32,7 @@ SYSCALL(uptime)
 
 SYSCALL(clone)
 SYSCALL(join)
+SYSCALL(sem_init)
+SYSCALL(sem_wait)
+SYSCALL(sem_signal)
+SYSCALL(sem_destroy)

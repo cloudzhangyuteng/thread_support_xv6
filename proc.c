@@ -12,6 +12,12 @@ struct {
   struct proc proc[NPROC];
 } ptable;
 
+struct semaphore {
+	int value;
+	int active;
+	struct spinlock lock;
+};
+
 static struct proc *initproc;
 
 int nextpid = 1;
@@ -621,4 +627,51 @@ int join(void** stack)
     // Wait for children to exit.  (See wakeup1 call in proc_exit.)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
+}
+
+int	sem_init(struct semaphore* sem, unsigned int value)
+{
+	acquire(&sem->lock);
+	sem->value = value;
+	sem->active = 0;
+	release(&sem->lock);
+	
+	return 0;
+}
+
+int sem_wait(struct semaphore* sem)
+{
+	acquire(&sem->lock);
+	if (sem->active < sem->value)
+	{
+		sem->active++;
+	}
+	else
+	{
+		while(sem->active >= sem->value) 
+		{
+			sleep(&sem, &sem->lock);
+		}
+	}
+	release(&sem->lock);
+	
+	return 0;
+}
+
+int sem_signal(struct semaphore* sem)
+{
+	acquire(&sem->lock);
+	sem->active--;
+	release(&sem->lock);
+	
+	return 0;
+}
+
+int sem_destroy(struct semaphore* sem)
+{
+	acquire(&sem->lock);
+	sem->active = 0;
+	release(&sem->lock);
+	
+	return 0;
 }

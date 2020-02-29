@@ -9,6 +9,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
+struct semaphore;
 
 // bio.c
 void            binit(void);
@@ -120,8 +121,14 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
-int 			clone(void* stack, int size);  // changes added here
+// changes added here
+int 			clone(void* stack, int size);
 int				join(void** stack);
+int				sem_init(struct semaphore*, unsigned int);
+int 			sem_wait(struct semaphore*);
+int 			sem_signal(struct semaphore*);
+int 			sem_destroy(struct semaphore*);
+
 
 // swtch.S
 void            swtch(struct context**, struct context*);
