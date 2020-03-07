@@ -654,7 +654,6 @@ int sem_wait(struct semaphore* sem)
 		}
 	}
 	release(&sem->lock);
-	
 	return 0;
 }
 
