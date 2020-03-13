@@ -650,7 +650,7 @@ int sem_wait(struct semaphore* sem)
 	{
 		while(sem->active >= sem->value) 
 		{
-			sleep(&sem, &sem->lock);
+			sleep(sem, &sem->lock);
 		}
 	}
 	release(&sem->lock);
@@ -661,6 +661,7 @@ int sem_signal(struct semaphore* sem)
 {
 	acquire(&sem->lock);
 	sem->active--;
+	wakeup(sem);
 	release(&sem->lock);
 	
 	return 0;
