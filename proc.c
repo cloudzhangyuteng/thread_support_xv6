@@ -540,6 +540,7 @@ procdump(void)
   }
 }
 
+// similar to the fork function in xv6, create a thread and initialize a stack for the thread
 int clone(void *stack, int size)
 {
 	int i,pid;
@@ -585,6 +586,7 @@ int clone(void *stack, int size)
 	return pid;
 }
 
+// wait for a thread to finish, similar to the wait function in xv6
 int join(void** stack)
 {
   struct proc *p;
@@ -629,6 +631,7 @@ int join(void** stack)
   }
 }
 
+// initialize a semaphore
 int	sem_init(struct semaphore* sem, unsigned int value)
 {
 	acquire(&sem->lock);
@@ -639,6 +642,7 @@ int	sem_init(struct semaphore* sem, unsigned int value)
 	return 0;
 }
 
+// wait for previous thread to finish
 int sem_wait(struct semaphore* sem)
 {
 	acquire(&sem->lock);
@@ -657,6 +661,7 @@ int sem_wait(struct semaphore* sem)
 	return 0;
 }
 
+// reduce the number of active threads when finish, and wakeup the semaphore
 int sem_signal(struct semaphore* sem)
 {
 	acquire(&sem->lock);
@@ -667,6 +672,7 @@ int sem_signal(struct semaphore* sem)
 	return 0;
 }
 
+// set the number of active threads back to 0
 int sem_destroy(struct semaphore* sem)
 {
 	acquire(&sem->lock);

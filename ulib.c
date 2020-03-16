@@ -105,6 +105,7 @@ memmove(void *vdst, const void *vsrc, int n)
   return vdst;
 }
 
+// user level thread creation function, allocate memory and pass in the arguements 
 void thread_create(void *(*start_routine)(void*), void *arg)
 {
 	void* stack = malloc(1024);
@@ -116,6 +117,7 @@ void thread_create(void *(*start_routine)(void*), void *arg)
 	clone(stack, 1024);
 }
 
+// user level join function, wait for thread to finish and free the memory
 void thread_join()
 {
 	void* stack;
